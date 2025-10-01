@@ -8,15 +8,25 @@
 
 Ce projet implémente un **module d'aiguillage intelligent** pour un système de montagnes russes miniatures. Le module combine : MicroCoaster WiFiManager permet de connecter facilement chaque module de ton circuit de montagnes russes miniature (switch track, launch track, station, etc.) à un réseau WiFi local, puis à l’application web fournie. Il centralise la configuration WiFi, la gestion des accès et la communication entre les modules et l’interface web.
 
-- **Gestion WiFi automatique** avec portail de configuration### Fonctionnalités principales
+- **Gestion WiFi automatique** avec portail de configuration
+  
+### Fonctionnalités principales
 
-- **Contrôle d'aiguillage physique** via verrin électrique- **Portail de configuration WiFi** : chaque module peut être configuré via un portail web local (mode AP) pour entrer les identifiants WiFi de la box ou du réseau cible.
+- **Contrôle d'aiguillage physique** via verrin électrique
 
-- **Communication WebSocket sécurisée** avec serveur distant- **Connexion automatique** : une fois configuré, le module se connecte automatiquement au réseau WiFi domestique et communique avec l’application web.
+- **Portail de configuration WiFi** : chaque module peut être configuré via un portail web local (mode AP) pour entrer les identifiants WiFi de la box ou du réseau cible.
 
-- **Interface LED** pour visualisation d'état- **Sécurité** : les identifiants WiFi ne sont jamais stockés dans le dépôt, mais dans un fichier local non versionné.
+- **Communication WebSocket sécurisée** avec serveur distant
 
-- **Authentification sécurisée** et télémétrie temps réel- **Gestion multi-modules** : chaque module (station, switch, launch, etc.) utilise le même firmware et peut être identifié dans l’application web.
+- **Connexion automatique** : une fois configuré, le module se connecte automatiquement au réseau WiFi domestique et communique avec l’application web.
+
+- **Interface LED** pour visualisation d'état
+
+- **Sécurité** : les identifiants WiFi ne sont jamais stockés dans le dépôt, mais dans un fichier local non versionné.
+
+- **Authentification sécurisée** et télémétrie temps réel
+
+- **Gestion multi-modules** : chaque module (station, switch, launch, etc.) utilise le même firmware et peut être identifié dans l’application web.
 
 
 ## 🔧 Composants Hardware## Utilisation
@@ -33,15 +43,15 @@ Ce projet implémente un **module d'aiguillage intelligent** pour un système de
 
 - **Verrin électrique** : Actionneur pour basculer l'aiguillage
 
-- **Driver DRV8871** : Contrôleur de moteur H-Bridge## Auteur
+- **Driver DRV8871** : Contrôleur de moteur H-Bridge
 
 - **Pins de contrôle** : IN1 (GPIO 21) et IN2 (GPIO 22)
 
 ### **Interface Visuelle**
 
-- **LED Gauche** : GPIO 2 (position "left")---
+- **LED Gauche** : GPIO 2 (position "left")
 
-- **LED Droite** : GPIO 4 (position "right")Pour toute question ou contribution, ouvre une issue ou un pull request !
+- **LED Droite** : GPIO 4 (position "right")
 
 ### **Bouton de Secours**
 - **GPIO 0** : Bouton physique pour reset/portail
