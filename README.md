@@ -1,18 +1,12 @@
 # 🎢 MicroCoaster - Module Switch Track ESP32# 🎢 MicroCoaster - Module Switch Track ESP32
 
-
-
 > Module intelligent d'aiguillage sécurisé pour montagnes russes miniatures avec gestion WiFi automatique et contrôle distant.> Module intelligent d'aiguillage sécurisé pour montagnes russes miniatures avec gestion WiFi automatique et contrôle distant.
 
+## 📋 Description du Projet
 
-
-## 📋 Description du Projet## À quoi sert ce projet ?
-
-
+## À quoi sert ce projet ?
 
 Ce projet implémente un **module d'aiguillage intelligent** pour un système de montagnes russes miniatures. Le module combine :MicroCoaster WiFiManager permet de connecter facilement chaque module de ton circuit de montagnes russes miniature (switch track, launch track, station, etc.) à un réseau WiFi local, puis à l’application web fournie. Il centralise la configuration WiFi, la gestion des accès et la communication entre les modules et l’interface web.
-
-
 
 - **Gestion WiFi automatique** avec portail de configuration### Fonctionnalités principales
 
@@ -25,10 +19,7 @@ Ce projet implémente un **module d'aiguillage intelligent** pour un système de
 - **Authentification sécurisée** et télémétrie temps réel- **Gestion multi-modules** : chaque module (station, switch, launch, etc.) utilise le même firmware et peut être identifié dans l’application web.
 
 
-
 ## 🔧 Composants Hardware## Utilisation
-
-
 
 ### **ESP32**1. Flashe le firmware sur chaque module ESP32.
 
@@ -44,9 +35,7 @@ Ce projet implémente un **module d'aiguillage intelligent** pour un système de
 
 - **Driver DRV8871** : Contrôleur de moteur H-Bridge## Auteur
 
-- **Pins de contrôle** : IN1 (GPIO 21) et IN2 (GPIO 22)CyberSpaceRS
-
-Yamakajump
+- **Pins de contrôle** : IN1 (GPIO 21) et IN2 (GPIO 22)
 
 ### **Interface Visuelle**
 
