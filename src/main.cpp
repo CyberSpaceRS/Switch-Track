@@ -27,7 +27,7 @@ AyresWiFiManager wifi;
 
 // Configuration serveur WebSocket - Basculez entre ws (local) et wss (production)
 #define SERVER_USE_SSL false                       // true = wss (SSL/TLS), false = ws (plain)
-const char* server_host = "192.168.1.16";        // Adresse IP/domaine du serveur
+const char* server_host = "192.168.1.16";        // Adresse IP/domaine du serveur (192.168.1.16 pour local, app.microcoaster.com pour production)
 const uint16_t server_port = 3000;                 // Port du serveur (3000 pour ws, 443 pour wss)
 const char* websocket_path = "/esp32";             // Endpoint WebSocket dédié aux modules ESP32
 // Empreinte SSL optionnelle (fingerprint SHA1) - laissez vide "" pour ne pas vérifier
