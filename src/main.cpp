@@ -13,19 +13,25 @@
 #include <AyresWiFiManager.h> // Gestionnaire WiFi avec portail captif
 #include <WebSocketsClient.h> // Client WebSocket pour communication serveur
 #include <ArduinoJson.h>      // Manipulation des données JSON
-#include "env.h"              // Configuration WiFi (identifiants point d'accès)
 
 // ========================================
 // CONFIGURATION PRINCIPALE
 // ========================================
 
+// Configuration WiFi (identifiants du point d'accès de secours)
+#define ESP_WIFI_SSID "WifiManager-MicroCoaster"
+#define ESP_WIFI_PASSWORD "123456789"
+
 // Instance du gestionnaire WiFi intelligent avec portail captif
 AyresWiFiManager wifi;
 
-// Configuration serveur WebSocket sécurisé (WSS)
-const char* server_host = "app.microcoaster.com";  // Adresse du serveur distant MicroCoaster
-const uint16_t server_port = 443;                  // Port HTTPS/WSS standard
+// Configuration serveur WebSocket - Basculez entre ws (local) et wss (production)
+#define SERVER_USE_SSL false                       // true = wss (SSL/TLS), false = ws (plain)
+const char* server_host = "192.168.1.16";        // Adresse IP/domaine du serveur
+const uint16_t server_port = 3000;                 // Port du serveur (3000 pour ws, 443 pour wss)
 const char* websocket_path = "/esp32";             // Endpoint WebSocket dédié aux modules ESP32
+// Empreinte SSL optionnelle (fingerprint SHA1) - laissez vide "" pour ne pas vérifier
+const char* server_fingerprint = "";               // Ex: "AA BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99 AA BB CC DD"
 
 // Identifiants uniques du module Switch Track
 const String MODULE_ID = "MC-0001-ST";                        // ID unique du module (MicroCoaster-Switch Track)
@@ -289,19 +295,33 @@ void loop() {
 // FONCTIONS DE COMMUNICATION WEBSOCKET
 // ========================================
 
-// Établit la connexion WebSocket sécurisée avec le serveur
+// Établit la connexion WebSocket avec le serveur (ws ou wss selon configuration)
 void connectSocket() {
-  Serial.println("[WEBSOCKET] 🔗 Connexion WebSocket sécurisé...");
+  Serial.println("[WEBSOCKET] 🔗 Connexion WebSocket...");
   Serial.println("[WEBSOCKET] 📍 Module ID: " + MODULE_ID);
   Serial.println("[WEBSOCKET] 🔑 Password: " + MODULE_PASSWORD.substring(0, 8) + "...");
   
-  // Configuration de la connexion WebSocket sécurisée (WSS)
-  webSocket.beginSSL(server_host, server_port, websocket_path);
+  // Configuration de la connexion WebSocket selon le flag SSL
+  #if SERVER_USE_SSL
+    Serial.println("[WEBSOCKET] 🔒 Mode: WSS (SSL/TLS activé)");
+    if (strlen(server_fingerprint) > 0) {
+      Serial.println("[WEBSOCKET] 🔐 Vérification empreinte SSL activée");
+      webSocket.beginSSL(server_host, server_port, websocket_path, server_fingerprint);
+    } else {
+      Serial.println("[WEBSOCKET] ⚠️  Vérification empreinte SSL désactivée (non recommandé en production)");
+      webSocket.beginSSL(server_host, server_port, websocket_path);
+    }
+    Serial.printf("[WEBSOCKET] 🤖 WebSocket: wss://%s:%d%s\n", server_host, server_port, websocket_path);
+  #else
+    Serial.println("[WEBSOCKET] 🔓 Mode: WS (plain, sans SSL)");
+    webSocket.begin(server_host, server_port, websocket_path);
+    Serial.printf("[WEBSOCKET] 🤖 WebSocket: ws://%s:%d%s\n", server_host, server_port, websocket_path);
+  #endif
+  
   webSocket.onEvent(webSocketEvent);           // Gestionnaire d'événements
   webSocket.setReconnectInterval(5000);        // Reconnexion automatique toutes les 5s
   webSocket.enableHeartbeat(15000, 3000, 2);   // Heartbeat WebSocket: 15s interval, 3s timeout, 2 essais
   
-  Serial.printf("[WEBSOCKET] 🤖 WebSocket: wss://%s:%d%s\n", server_host, server_port, websocket_path);
   Serial.println("[WEBSOCKET] ✅ ESP32 Switch Track prêt (Architecture hybride)!");
 }
 
